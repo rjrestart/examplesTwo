@@ -1,0 +1,54 @@
+.InputBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ProfitBlock {
+  width: 20%
+}
+
+.formRotation {
+  display: flex;
+}
+
+.TargetPriceBlock {
+  width: 40%;
+}
+
+.AmountToBuyBlock {
+  width: 40%
+}
+
+.deleteButtonStyle {
+  width: 13px;
+  height: 13px;
+  margin-left: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: red;
+    border-radius: 17px;
+  }
+}
+
+.errorBlock {
+  z-index: 1001;
+  font-Family: 'SFProDisplay';
+  background-color: #EC512E;
+  position: absolute;
+  font-style: 'normal';
+  font-weight: '400';
+  font-size: 15;
+  padding: 20px;
+  top: 10px !important;
+  left: 10px !important;
+}
+
+.buttonCheckForm {
+  width: 100px;
+  position: absolute;
+  height: 30px;
+  bottom: 30px;
+  right: 500px;
+}

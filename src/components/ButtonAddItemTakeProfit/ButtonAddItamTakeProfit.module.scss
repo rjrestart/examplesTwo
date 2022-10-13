@@ -1,0 +1,29 @@
+.buttonBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 80%;
+  cursor: pointer;
+
+  img {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+.buttonBlock {
+  p {
+    font-family: SFProDisplay;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 14px;
+    letter-spacing: 0.4px;
+    color: #0078FF;
+    margin-left: 2%;
+
+    &:hover {
+      color: green;
+    }
+  }
+}

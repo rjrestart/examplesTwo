@@ -1,0 +1,51 @@
+.block {
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items:center;
+};
+.questionIcon {
+    width: 20px;
+    height: 20px;
+    margin-left: 4px;
+}
+.title {
+    font-family: SFProDisplay;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.25px;
+    color: #FFFFFF;
+}
+
+.takeProfitTittleBlock {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+.projectProfit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top:7%;
+
+}
+.spanProjectProfit{
+    font-family:SFProDisplay;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    color: #FFFFFF;
+    opacity: 0.5;
+}
+.resulNumber {
+    color: #FFFFFF;
+    margin-right:5px;
+}
