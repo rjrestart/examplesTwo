@@ -1,7 +1,7 @@
 import React from "react"
 import { QUOTE_CURRENCY, PERCENTAGE_SYMBOL } from "PlaceOrder/constants";
 import styles from './InputForTakeProfit.module.scss'
-import { InputAdornment, FilledInput} from "@material-ui/core";
+import { InputAdornment, FilledInput,FormHelperText} from "@material-ui/core";
 import DeleteIcon from '../Img/Delete_icon.png'
 import { TakeProfitType } from "PlaceOrder/model";
 import {
@@ -14,13 +14,13 @@ import {
 } from "./InputForTakeProfitObjectStyle";
 import { observer } from "mobx-react-lite";
 import { useStore } from "PlaceOrder/context";
-import {useFormik} from "formik";
+import { useFormik } from "formik";
 
 const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
     const {
         id,
         profit,
-        targitePrise,
+        targetePrise,
         amoundToBye,
     } = data;
 
@@ -38,15 +38,21 @@ const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
 
     const changeProfit = (event: any) => {
         addNewProfitValue(id, event.target.value);
+        formik.values.profit = event.target.value;
+        formik.handleChange(event)
         getRelevantSumm()
     }
 
     const changeTargetPrice = (event: any) => {
         addNewTargetPriceValue(id, event.target.value)
+        formik.values.targetePrise = event.target.value;
+        formik.handleChange(event)
         getRelevantSumm()
     }
     const changeAmoundToBuy = (event: any) => {
         addamoundToByeValue(id, event.target.value)
+        formik.values.amoundToBye = event.target.value
+        formik.handleChange(event)
         getRelevantSumm()
     }
 
@@ -58,7 +64,7 @@ const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
     const formik = useFormik({
         initialValues: {
             profit: profit,
-            targitePrise: targitePrise,
+            targetePrise: targetePrise,
             amoundToBye: amoundToBye,
         },
         onSubmit: (values) => {
@@ -66,14 +72,12 @@ const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
         },
 
         validate: values => {
-            let toNumber = Number(values.profit)
-            console.log(toNumber)
             let errors: any = {}
             if (values.profit === 0.01) {
                 errors.profit = 'Minimum value is 0.01'
             } else if (allSummValueProfit > 500) {
                 errors.profit = 'Maximum profit sum is 500%'
-            } else if (values.targitePrise === 0) {
+            } else if (values.targetePrise === 0) {
                 errors.targitePrise = "Price must be greater than 0"
             } else if (allSummValueAmount > 100) {
                 let ExcessNum = allSummValueAmount - 100
@@ -84,20 +88,23 @@ const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
     })
     return (
         <div className={styles.InputBlock}>
-            <form className={styles.formRotation} onSubmit={formik.handleSubmit}>
+            <form  id='formInput' className={styles.formRotation} onSubmit={formik.handleSubmit}>
                 <div className={styles.ProfitBlock}>
                     <span style={FotmHelperTextStyle}>
                         Profit
                     </span>
-                    {formik.touched.profit && formik.errors.profit ? <p className={styles.errorBlock}>{formik.errors.profit}</p> : null}
+                    {formik.touched.profit && formik.errors.profit 
+                      ?  <FormHelperText className={styles.errorBlock} id="component-error-text">{formik.errors.profit}</FormHelperText> 
+                      : null}
                     <FilledInput
                         value={profit}
                         style={ProfitFilledInputsStyle}
-                        onChange={(event) => { changeProfit(event) }}
+                        onChange={(event) => {changeProfit(event) }}
                         endAdornment={
                             <InputAdornment position="end">
                                 <span style={SpanStyle}>{PERCENTAGE_SYMBOL}</span>
                             </InputAdornment>}
+                            
                         aria-describedby="filled-weight-helper-text"
                         error={Boolean(formik.errors.profit)}
                         inputProps={{ style: InputPropsStyle }}
@@ -107,22 +114,26 @@ const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
                     <span style={FotmHelperTextStyle}>
                         Target price
                     </span>
-                    {formik.touched.targitePrise && formik.errors.targitePrise ? <p className={styles.errorBlock}>{formik.errors.targitePrise}</p> : null}
+                    {formik.touched.targetePrise && formik.errors.targetePrise 
+                       ? <FormHelperText className={styles.errorBlock} id="component-error-text">{formik.errors.targetePrise}</FormHelperText>
+                       : null}
                     <FilledInput
-                        value={targitePrise}
-                        name={'targitePrise'}
-                        error={Boolean(formik.errors.targitePrise)}
+                        value={targetePrise}
+                        name={'targetePrise'}
                         style={TargetPriceFilledInputsStyle}
                         onChange={(event) => { changeTargetPrice(event) }}
                         endAdornment={
                             <InputAdornment position="end">
                                 <span style={SpanStyle}>{QUOTE_CURRENCY}</span>
                             </InputAdornment>}
+                        error={Boolean(formik.errors.targetePrise)}
                         inputProps={{ style: InputPropsStyle }}
                     />
                 </div>
                 <div className={styles.AmountToBuyBlock}>
-                    {formik.touched.amoundToBye && formik.errors.amoundToBye ? <p className={styles.errorBlock}>{formik.errors.amoundToBye}</p> : null}
+                    {formik.touched.amoundToBye && formik.errors.amoundToBye 
+                        ? <FormHelperText className={styles.errorBlock} id="component-error-text">{formik.errors.amoundToBye}</FormHelperText> 
+                        : null}
                     <span style={FotmHelperTextStyle}>
                         Amount to buy
                     </span>
@@ -143,7 +154,6 @@ const InputForTakeProfit = observer((data: TakeProfitType, { onSubmit }) => {
                         inputProps={{ style: InputPropsStyle }}
                     />
                 </div>
-                <button className={styles.buttonCheckForm} type="submit"> Check form </button>
             </form>
         </div>
     )

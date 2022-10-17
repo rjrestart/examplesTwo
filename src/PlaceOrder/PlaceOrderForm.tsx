@@ -12,7 +12,7 @@ import { TakeProfit } from "./components/TakeProfit/TakeProfit";
 export const PlaceOrderForm = observer((props:any) => {
 
   const [isSubmit, setSubmit] = useState(false)
-
+  
   const {
     activeOrderSide,
     price,
@@ -69,6 +69,8 @@ export const PlaceOrderForm = observer((props:any) => {
         </div>
         <div className="submit">
           <Button
+            form="formInput"
+            type="submit"
             onClick={()=>{setSubmit(!isSubmit)}}
             color={activeOrderSide === "buy" ? "green" : "red"}
             fullWidth

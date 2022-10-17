@@ -26,12 +26,13 @@ export class PlaceOrderStore {
   @action.bound
   public setOrderSide(side: OrderSide) {
     this.activeOrderSide = side;
+    this.resultProfit()
   }
   @action.bound
   public addOneTakeProfit(id: number, odlProfit: number) {
     let newId = id + 1
     this.profit = odlProfit + 2
-    let newTakeProfit = { id: newId, profit: this.profit, targitePrise: this.price + this.price * this.profit, amoundToBye: 100 }
+    let newTakeProfit = { id: newId, profit: this.profit, targetePrise: this.price + this.price * this.profit, amoundToBye: 100 }
     this.takeProfitArray = [newTakeProfit]
     this.resultProfit()
   }
@@ -39,7 +40,7 @@ export class PlaceOrderStore {
   public addTakeProfit(id: number, odlProfit: number) {
     let newId = id + 1
     this.profit = odlProfit + 2
-    let newTakeProfit = { id: newId, profit: this.profit, targitePrise: this.price + this.price * this.profit, amoundToBye: this.amoundToBye }
+    let newTakeProfit = { id: newId, profit: this.profit, targetePrise: this.price + this.price * this.profit, amoundToBye: this.amoundToBye }
     this.takeProfitArray = [...this.takeProfitArray, newTakeProfit]
     this.resultProfit()
   }
@@ -73,7 +74,7 @@ export class PlaceOrderStore {
     this.takeProfitArray.map((item) => {
       if (item.id === id) {
         return item.profit = +newValue,
-          item.targitePrise = this.price + this.price * this.profit
+          item.targetePrise = this.price + this.price * this.profit
       }
     })
     this.resultProfit()
@@ -84,7 +85,7 @@ export class PlaceOrderStore {
     this.targetPrice = +newValue
     this.takeProfitArray.map((item) => {
       if (item.id === id) {
-        return item.targitePrise = +newValue
+        return item.targetePrise = +newValue
       }
     })
     this.resultProfit()
@@ -93,11 +94,17 @@ export class PlaceOrderStore {
   @action.bound
   public resultProfit() {
     this.resultSumm = 0
+    if(this.takeProfitArray.length === 1) { 
+      this.takeProfitArray.forEach((item) => {
+        this.resultSumm  = this.activeOrderSide  == 'buy'?  item.amoundToBye * (item.targetePrise - this.price) : this.amount * (this.price - item.targetePrise)
+    })}
+    else {
     this.takeProfitArray.forEach((item) => {
-      let result = item.targitePrise * this.amount - this.startTotal
+      let result = item.targetePrise * this.amount - this.startTotal
       let summ = result * item.amoundToBye / 100
       this.resultSumm += summ
     })
+    }
   }
 
   @action.bound
